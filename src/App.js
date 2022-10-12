@@ -4,14 +4,14 @@ import react, { useState } from "react";
 
 function App() {
   const url = "https://type.fit/api/quotes";
-  const [quotes, setQuotes] = useState([]);
-  const [number, setNumber] = useState("");
+  const [quotes, setQuotes] = useState(null);
+  const [number, setNumber] = useState(0);
   const handleClick = (e) => {
     getQuotes(e);
   };
   const getQuotes = (e) => {
     e.preventDefault();
-    if (number === "0") {
+    if (number === 0) {
       alert("Please enter a number");
     } else {
       fetch(url)
@@ -29,10 +29,7 @@ function App() {
           }
           setQuotes(output);
         });
-      console.log(quotes);
     }
-
-    console.log(number);
   };
   function shuffle(quotes) {
     let CI = quotes.length,
@@ -55,31 +52,36 @@ function App() {
   return (
     <div className="App">
       <h1>Quote Generator</h1>
-      <h2>Number of quotes</h2>
-      <form onSubmit={handleClick}>
-        <input
-          type="text"
-          value={number}
-          onChange={(e) => setNumber(e.target.value)}
-        ></input>
-      </form>
-      <button
-        onClick={(e) => {
-          handleClick(e);
-        }}
-      >
-        Get Quotes
-      </button>
-      <div>
-        {quotes.map((quote, index) => {
-          return (
-            <div key={index} className="singleQuote">
-              <div className="quote"> {quote[0]}</div>
-              <div className="author">~ {quote[1]}</div>
-            </div>
-          );
-        })}
+      <div className="formBox">
+        <h2 className="formBoxHeader">Number of quotes:</h2>
+        <form onSubmit={handleClick}>
+          <input
+            type="number"
+            value={number}
+            min={1}
+            onChange={(e) => setNumber(e.target.value)}
+          ></input>
+        </form>
+        <button
+          onClick={(e) => {
+            handleClick(e);
+          }}
+        >
+          Get Quotes
+        </button>
       </div>
+      {quotes && (
+        <div className="singleQuoteBox">
+          {quotes.map((quote, index) => {
+            return (
+              <div key={index} className="singleQuote">
+                <div className="quote"> {quote[0]}</div>
+                <div className="author">~ {quote[1]}</div>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }
