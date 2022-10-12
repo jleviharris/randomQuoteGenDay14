@@ -4,3 +4,14 @@
   justify-content: center;
   align-items: center;
 }
+
+.singleQuote {
+  margin: 1rem;
+  border: 1px solid black;
+}
+.quote{
+  margin: 0.5rem;
+}
+.author{
+  margin: 0.5rem;
+}
